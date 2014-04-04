@@ -1,16 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[Raphael Passini]]></title>
   <link href="http://raphapassini.github.io/atom.xml" rel="self"/>
   <link href="http://raphapassini.github.io/"/>
-  <updated>2014-04-04T11:30:44-03:00</updated>
+  <updated>2014-04-04T13:51:54-03:00</updated>
   <id>http://raphapassini.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Raphael Passini]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Testing Octopress]]></title>
+    <link href="http://raphapassini.github.io/blog/2014/04/04/testing-octopress/"/>
+    <updated>2014-04-04T13:26:02-03:00</updated>
+    <id>http://raphapassini.github.io/blog/2014/04/04/testing-octopress</id>
+    <content type="html"><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam est, pretium eu semper viverra, fermentum ac ante. Fusce egestas neque eget diam tempus, sed placerat nunc pulvinar. Aliquam erat volutpat. Integer elementum iaculis augue, eu fermentum augue porta molestie. Praesent egestas neque orci, nec luctus metus cursus facilisis. Praesent tincidunt ultrices tincidunt. Praesent at sapien malesuada, imperdiet mauris sit amet, imperdiet purus. Pellentesque elementum bibendum sapien condimentum vestibulum. Vestibulum placerat tellus justo, non commodo elit scelerisque gravida. Aenean sagittis tempus sodales. Sed in ante in massa volutpat congue. Donec condimentum nibh nunc, nec rhoncus odio condimentum eget. Pellentesque non arcu quis diam ullamcorper varius.</p>
+
+<p>Aenean suscipit purus nec rhoncus auctor. Suspendisse euismod, ligula ac pretium consequat, nulla nisl rhoncus sapien, ut fermentum turpis orci porta ante. Vivamus vitae neque eget nunc laoreet vestibulum vehicula quis ligula. Nulla mattis euismod neque, eu blandit purus egestas vitae. Ut malesuada condimentum ipsum non condimentum. Praesent dictum ligula tortor, ac vestibulum quam auctor vitae. Aenean aliquet aliquam erat eget tempor. Duis condimentum purus et dictum varius. Praesent consectetur nisi in mi tincidunt aliquet. Donec eu iaculis leo, vitae scelerisque risus. Morbi sem erat, ornare nec metus vitae, tempor eleifend est. Aliquam erat volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">django.models</span> <span class="kn">import</span> <span class="n">Model</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+</span><span class='line'>    <span class="nb">object</span> <span class="o">=</span> <span class="bp">None</span>
+</span><span class='line'>    <span class="n">max_children</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>
+</span><span class='line'>            <span class="k">print</span> <span class="s">&#39;Hello user!&#39;</span>
+</span><span class='line'>        <span class="k">else</span><span class="p">:</span>
+</span><span class='line'>            <span class="k">print</span> <span class="s">&#39;Hello guest!&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Praesent aliquam quis purus eget commodo. Aenean egestas nibh vel libero sodales iaculis. In accumsan elit nisl. Praesent accumsan cursus lorem, at iaculis arcu elementum a. Integer tincidunt feugiat velit. Mauris viverra dignissim tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam blandit eros a volutpat accumsan. Cras a aliquam quam. Aliquam dignissim dignissim justo, vitae consequat nisi tristique quis. Maecenas tincidunt euismod pulvinar. Nunc in dictum urna. Maecenas mollis auctor neque sit amet sodales. Cras pretium eu nisl a molestie. Duis id auctor sem.</p>
+]]></content>
+  </entry>
   
 </feed>
