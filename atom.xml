@@ -4,7 +4,7 @@
   <title><![CDATA[Raphael Passini]]></title>
   <link href="http://raphapassini.github.io/atom.xml" rel="self"/>
   <link href="http://raphapassini.github.io/"/>
-  <updated>2014-04-04T13:51:54-03:00</updated>
+  <updated>2014-04-07T16:38:01-03:00</updated>
   <id>http://raphapassini.github.io/</id>
   <author>
     <name><![CDATA[Raphael Passini]]></name>
@@ -14,13 +14,38 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Testing Octopress]]></title>
-    <link href="http://raphapassini.github.io/blog/2014/04/04/testing-octopress/"/>
-    <updated>2014-04-04T13:26:02-03:00</updated>
-    <id>http://raphapassini.github.io/blog/2014/04/04/testing-octopress</id>
-    <content type="html"><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc quam est, pretium eu semper viverra, fermentum ac ante. Fusce egestas neque eget diam tempus, sed placerat nunc pulvinar. Aliquam erat volutpat. Integer elementum iaculis augue, eu fermentum augue porta molestie. Praesent egestas neque orci, nec luctus metus cursus facilisis. Praesent tincidunt ultrices tincidunt. Praesent at sapien malesuada, imperdiet mauris sit amet, imperdiet purus. Pellentesque elementum bibendum sapien condimentum vestibulum. Vestibulum placerat tellus justo, non commodo elit scelerisque gravida. Aenean sagittis tempus sodales. Sed in ante in massa volutpat congue. Donec condimentum nibh nunc, nec rhoncus odio condimentum eget. Pellentesque non arcu quis diam ullamcorper varius.</p>
+    <title type="html"><![CDATA[Gerenciando Assets Com Django-pipeline]]></title>
+    <link href="http://raphapassini.github.io/blog/2014/04/07/gerenciando-assets-com-django-pipeline/"/>
+    <updated>2014-04-07T13:05:36-03:00</updated>
+    <id>http://raphapassini.github.io/blog/2014/04/07/gerenciando-assets-com-django-pipeline</id>
+    <content type="html"><![CDATA[<p>O objetivo desse post é explicar a utilização do aplicativo <a href="https://django-pipeline.readthedocs.org/en/latest/">django-pipeline</a>
+para gerenciar a compilação e compressão de arquivos CoffeScript, Less, Sass,
+<a href="https://django-pipeline.readthedocs.org/en/latest/compilers.html">entre outros</a>.</p>
 
-<p>Aenean suscipit purus nec rhoncus auctor. Suspendisse euismod, ligula ac pretium consequat, nulla nisl rhoncus sapien, ut fermentum turpis orci porta ante. Vivamus vitae neque eget nunc laoreet vestibulum vehicula quis ligula. Nulla mattis euismod neque, eu blandit purus egestas vitae. Ut malesuada condimentum ipsum non condimentum. Praesent dictum ligula tortor, ac vestibulum quam auctor vitae. Aenean aliquet aliquam erat eget tempor. Duis condimentum purus et dictum varius. Praesent consectetur nisi in mi tincidunt aliquet. Donec eu iaculis leo, vitae scelerisque risus. Morbi sem erat, ornare nec metus vitae, tempor eleifend est. Aliquam erat volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p>
+<h2>Instalando</h2>
+
+<p>Primeiro vamos instalar o pacote django-pipeline</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pip install django-pipeline</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Depois vamos alterar o nosso arquivo settings.py e adicionar o pipeline
+ao INSTALLED_APPS</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">INSTALLED_APPS</span> <span class="o">=</span> <span class="p">(</span>
+</span><span class='line'>    <span class="s">&#39;pipeline&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Configurando os seus assets</h2>
+
+<p>Como funciona a configuração dos arquivos no django-pipeline, primeiro vamos
+criar um grupo de arquivos estáticos, por exemplo, &ldquo;main&rdquo;:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -33,21 +58,80 @@
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">django.models</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">PIPELINE_CSS</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="s">&#39;main&#39;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="s">&#39;source_filenames&#39;</span><span class="p">:</span> <span class="p">(</span>
+</span><span class='line'>            <span class="s">&#39;less/main.less&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;less/extra.less&#39;</span><span class="p">,</span>
+</span><span class='line'>        <span class="p">),</span>
+</span><span class='line'>        <span class="s">&#39;output_filename&#39;</span><span class="p">:</span> <span class="s">&#39;css/main.css&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">MyModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
-</span><span class='line'>    <span class="nb">object</span> <span class="o">=</span> <span class="bp">None</span>
-</span><span class='line'>    <span class="n">max_children</span> <span class="o">=</span> <span class="mi">10</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
-</span><span class='line'>        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">():</span>
-</span><span class='line'>            <span class="k">print</span> <span class="s">&#39;Hello user!&#39;</span>
-</span><span class='line'>        <span class="k">else</span><span class="p">:</span>
-</span><span class='line'>            <span class="k">print</span> <span class="s">&#39;Hello guest!&#39;</span>
+</span><span class='line'><span class="n">PIPELINE_JS</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>    <span class="s">&#39;vendor&#39;</span><span class="p">:</span> <span class="p">{</span>
+</span><span class='line'>        <span class="s">&#39;source_filenames&#39;</span><span class="p">:</span> <span class="p">(</span>
+</span><span class='line'>            <span class="s">&#39;js/vendor/jquery.min.js&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s">&#39;js/vendor/handlebars.min.js&#39;</span><span class="p">,</span>
+</span><span class='line'>        <span class="p">),</span>
+</span><span class='line'>        <span class="s">&#39;output_filename&#39;</span><span class="p">:</span> <span class="s">&#39;js/vendor.min.js&#39;</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Praesent aliquam quis purus eget commodo. Aenean egestas nibh vel libero sodales iaculis. In accumsan elit nisl. Praesent accumsan cursus lorem, at iaculis arcu elementum a. Integer tincidunt feugiat velit. Mauris viverra dignissim tincidunt. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Aliquam blandit eros a volutpat accumsan. Cras a aliquam quam. Aliquam dignissim dignissim justo, vitae consequat nisi tristique quis. Maecenas tincidunt euismod pulvinar. Nunc in dictum urna. Maecenas mollis auctor neque sit amet sodales. Cras pretium eu nisl a molestie. Duis id auctor sem.</p>
+<p>Os arquivos listados dentro de &ldquo;source_filenames&rdquo; serão compilados para o arquivo
+&ldquo;output_filename&rdquo; quando executarmos o <code>python manage.py collectstatic</code>
+Nós podemos criar quantos grupos forem necessários para nosso projeto.</p>
+
+<h2>Utilizando nos templates</h2>
+
+<p>Para incluirmos os arquivos configurados no passo anterior no nosso template é bem simples:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>{% load compressed %}
+</span><span class='line'>{% compressed_css &#39;main&#39; %}
+</span><span class='line'>{% compressed_js &#39;vendor&#39; %}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Colocando em produção</h2>
+
+<p>Para deixar o ambiente pronto para produção vamos definir um dos storages disponíveis no pipeline.
+Você pode ver as opções de storage disponíveis <a href="https://django-pipeline.readthedocs.org/en/latest/storages.html">na documentação do django-pipeline</a>.
+Você pode ler mais sobre os storage systems customizados <a href="https://docs.djangoproject.com/en/1.6/howto/custom-file-storage/">aqui</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">STATICFILES_FINDERS</span> <span class="o">=</span> <span class="p">(</span>
+</span><span class='line'>    <span class="s">&#39;pipeline.finders.PipelineFinder&#39;</span><span class="p">,</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># PIPELINE RELATIVE CONFIG</span>
+</span><span class='line'><span class="n">STATICFILES_STORAGE</span> <span class="o">=</span> <span class="s">&#39;pipeline.storage.PipelineCachedStorage&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Pronto, feito isso podemos colocar nosso projeto em produção, quando rodarmos o <code>collectstatic</code>
+os arquivos enviados para o nosso <code>STATIC_ROOT</code> já estarão automaticamente compilados e minificados!</p>
+
+<p>Os códigos utilizados aqui podem ser obtidos no github desse tutorial: <a href="https://github.com/raphapassini/pipeline_tutorial">https://github.com/raphapassini/pipeline_tutorial</a></p>
+
+<p>Achou legal? Discorda de alguma coisa? Quer acrescentar algo? Deixa seu comentário ai embaixo!</p>
 ]]></content>
   </entry>
   

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Django | Raphael Passini]]></title>
+  <link href="http://raphapassini.github.io/blog/categories/django/atom.xml" rel="self"/>
+  <link href="http://raphapassini.github.io/"/>
+  <updated>2014-04-07T16:38:01-03:00</updated>
+  <id>http://raphapassini.github.io/</id>
+  <author>
+    <name><![CDATA[Raphael Passini]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Gerenciando Assets Com Django-pipeline]]></title>
+    <link href="http://raphapassini.github.io/blog/2014/04/07/gerenciando-assets-com-django-pipeline/"/>
+    <updated>2014-04-07T13:05:36-03:00</updated>
+    <id>http://raphapassini.github.io/blog/2014/04/07/gerenciando-assets-com-django-pipeline</id>
+    <content type="html"><![CDATA[<p>O objetivo desse post é explicar a utilização do aplicativo <a href="https://django-pipeline.readthedocs.org/en/latest/">django-pipeline</a>
+para gerenciar a compilação e compressão de arquivos CoffeScript, Less, Sass,
+<a href="https://django-pipeline.readthedocs.org/en/latest/compilers.html">entre outros</a>.</p>
+
+<h2>Instalando</h2>
+
+<p>Primeiro vamos instalar o pacote django-pipeline</p>
+
+<p><code>
+pip install django-pipeline
+</code></p>
+
+<p>Depois vamos alterar o nosso arquivo settings.py e adicionar o pipeline
+ao INSTALLED_APPS</p>
+
+<p>```python
+INSTALLED_APPS = (</p>
+
+<pre><code>'pipeline',
+</code></pre>
+
+<p>)
+```</p>
+
+<h2>Configurando os seus assets</h2>
+
+<p>Como funciona a configuração dos arquivos no django-pipeline, primeiro vamos
+criar um grupo de arquivos estáticos, por exemplo, &ldquo;main&rdquo;:</p>
+
+<p>```python
+PIPELINE_CSS = {</p>
+
+<pre><code>'main': {
+    'source_filenames': (
+        'less/main.less',
+        'less/extra.less',
+    ),
+    'output_filename': 'css/main.css',
+}
+</code></pre>
+
+<p>}</p>
+
+<p>PIPELINE_JS = {</p>
+
+<pre><code>'vendor': {
+    'source_filenames': (
+        'js/vendor/jquery.min.js',
+        'js/vendor/handlebars.min.js',
+    ),
+    'output_filename': 'js/vendor.min.js',
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Os arquivos listados dentro de &ldquo;source_filenames&rdquo; serão compilados para o arquivo
+&ldquo;output_filename&rdquo; quando executarmos o <code>python manage.py collectstatic</code>
+Nós podemos criar quantos grupos forem necessários para nosso projeto.</p>
+
+<h2>Utilizando nos templates</h2>
+
+<p>Para incluirmos os arquivos configurados no passo anterior no nosso template é bem simples:</p>
+
+<p>
+<code>html
+{% load compressed %}
+{% compressed_css 'main' %}
+{% compressed_js 'vendor' %}
+</code>
+</p>
+
+<h2>Colocando em produção</h2>
+
+<p>Para deixar o ambiente pronto para produção vamos definir um dos storages disponíveis no pipeline.
+Você pode ver as opções de storage disponíveis <a href="https://django-pipeline.readthedocs.org/en/latest/storages.html">na documentação do django-pipeline</a>.
+Você pode ler mais sobre os storage systems customizados <a href="https://docs.djangoproject.com/en/1.6/howto/custom-file-storage/">aqui</a></p>
+
+<p>```python
+STATICFILES_FINDERS = (</p>
+
+<pre><code>'pipeline.finders.PipelineFinder',
+</code></pre>
+
+<p>)</p>
+
+<h1>PIPELINE RELATIVE CONFIG</h1>
+
+<p>STATICFILES_STORAGE = &lsquo;pipeline.storage.PipelineCachedStorage&rsquo;</p>
+
+<p>```</p>
+
+<p>Pronto, feito isso podemos colocar nosso projeto em produção, quando rodarmos o <code>collectstatic</code>
+os arquivos enviados para o nosso <code>STATIC_ROOT</code> já estarão automaticamente compilados e minificados!</p>
+
+<p>Os códigos utilizados aqui podem ser obtidos no github desse tutorial: <a href="https://github.com/raphapassini/pipeline_tutorial">https://github.com/raphapassini/pipeline_tutorial</a></p>
+
+<p>Achou legal? Discorda de alguma coisa? Quer acrescentar algo? Deixa seu comentário ai embaixo!</p>
+]]></content>
+  </entry>
+  
+</feed>
